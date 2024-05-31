@@ -1,0 +1,53 @@
+{% extends "pages/layout.html" %}
+
+{% block content %}
+<h2>Add new vehicle</h2>
+<form action="/add_vehicle/2/" method="POST">
+    <input type="text" id="make" name="make" required placeholder="Make" title="Make" />
+    <input type="text" id="model" name="model" required placeholder="Model" title="Model" />
+    <input type="text" id="additional_model_info" name="additional_model_info" placeholder="Additional model info" title="Additional model info" />
+    <input type="number" id="year" name="year" required placeholder="Year" title="Year" />
+    <input type="text" id="licence" name="licence" required placeholder="Licence plate" title="Licence plate" />
+    <input type="number" id="odo" name="odo" required placeholder="Odometer reading" title="Odometer reading" />
+    <fieldset>
+        <legend><b>Is the car rental or loaned?</b></legend>
+        <div>
+            <input type="radio" id="rental_loaner_no" name="rental_loaner" value="no" checked />
+            <label for="rental_loaner_no">No</label>
+        </div>
+        <div>
+            <input type="radio" id="rental_loaner_yes" name="rental_loaner" value="yes" />
+            <label for="rental_loaner_yes">Yes</label>
+        </div>
+    </fieldset>
+    <fieldset id="vehicle_type" name="vehicle_type">
+        <legend><b>Select the type of vehicle</b></legend>
+        <div>
+            <input type="radio" id="single_fuel" name="vehicle_type" value="fuel" checked />
+            <label for="single_fuel">Single fuel</label>
+        </div>
+        <div>
+            <input type="radio" id="flex_fuel_be" name="vehicle_type" value="BE" />
+            <label for="flex_fuel_be">Flex-fuel Gasoline - Ethanol</label>
+        </div>
+        <div>
+            <input type="radio" id="flex_fuel_bg" name="vehicle_type" value="BG" />
+            <label for="flex_fuel_bg">Flex-fuel Gasoline - CBG/CNG (Gas)</label>
+        </div>
+        <div>
+            <input type="radio" id="mid_hybrid" name="vehicle_type" value="MHEV" />
+            <label for="mid_hybrid">Mid hybrid</label>
+        </div>
+        <div>
+            <input type="radio" id="plugin_hybrid" name="vehicle_type" value="PHEV" />
+            <label for="plugin_hybrid">Plugin hybrid</label>
+        </div>
+        <div>
+            <input type="radio" id="electric" name="vehicle_type" value="Electric" />
+            <label for="electric">Electric</label>
+        </div>
+    </fieldset>
+    <input type="hidden" id="phase" name="phase" value="1" />
+    <input type="submit" value="Next >>"/>
+</form>
+{% endblock %}

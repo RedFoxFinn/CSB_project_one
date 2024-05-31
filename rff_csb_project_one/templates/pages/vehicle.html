@@ -1,0 +1,62 @@
+{% extends "pages/layout.html" %}
+
+{% block content %}
+<h2>Details - {{details.vehicle_header}}</h2>
+<div>
+    {% if details.rental_or_loan %}
+        <p style="color: crimson;"><b>Rental / loan</b></p>
+    {% endif %}
+    {% if details.is_vehicle_on_winter_tires %}
+        <p style="color: skyblue;"><b>Winter tires</b></p>
+    {% endif %}
+    <p>Make: <b>{{details.make}}</b></p>
+    <p>Model: <b>{{details.model}}</b></p>
+    {% if details.additional_model_details %}
+        <p>Additional model details:<br><b>{{details.additional_model_details}}</b></p>
+    {% endif %}
+    <p><b>{{details.vehicle_type}}</b></p>
+    <p>Year: <b>{{details.year}}</b></p>
+    <p>Licence plate: <b>{{details.licence_plate}}</b></p>
+    <p>Odometer reading: <b>{{details.odometer}} km</b></p>
+    {% if details.vehicle_type_shorthand == "EV" %}
+        <p>Battery capacity: <b>{{details.capacity_kwh}} kWh</b></p>
+        <p>Charge level after last recharge: <b>{{details.charge_level}} %</b></p>
+    {% elif details.vehicle_type_shorthand == "CGV" %}
+        <p>Gas container capacity: <b>{{details.capacity_kg}} kg</b></p>
+        <p>Gas level after last refill: <b>{{details.level_kg}} kg</b></p>
+    {% elif details.vehicle_type_shorthand == "SFV" %}
+        <p>Fuel type: <b>{{details.fuel_type}}</b></p>
+        <p>Fuel tank capacity: <b>{{details.capacity_l}} l</b></p>
+        <p>Fuel level after last refill: <b>{{details.level_l}} l</b></p>
+    {% elif details.vehicle_type_shorthand == "FFVE" %}
+        <p>Fuel type: <b>{{details.fuel_type}}</b></p>
+        <p>Fuel tank capacity: <b>{{details.capacity_l}} l</b></p>
+        <p>Fuel level after last refill: <b>{{details.level_l}} l</b></p>
+    {% elif details.vehicle_type_shorthand == "FFVG" %}
+        <p>Fuel type: <b>{{details.fuel_type}}</b></p>
+        <p>Fuel tank capacity: <b>{{details.capacity_l}} l</b></p>
+        <p>Fuel level after last refill: <b>{{details.level_l}} l</b></p>
+        <p>Gas container capacity: <b>{{details.capacity_kg}} kg</b></p>
+        <p>Gas level after last refill: <b>{{details.level_kg}} kg</b></p>
+    {% elif details.vehicle_type_shorthand == "MHEV" %}
+        <p>Fuel type: <b>{{details.fuel_type}}</b></p>
+        <p>Fuel tank capacity: <b>{{details.capacity_l}} l</b></p>
+        <p>Fuel level after last refill: <b>{{details.level_l}} l</b></p>
+        <p>Battery capacity: <b>{{details.battery_capacity_kwh}} kWh</b></p>
+    {% elif details.vehicle_type_shorthand == "PHEV" %}
+        <p>Fuel type: <b>{{details.fuel_type}}</b></p>
+        <p>Fuel tank capacity: <b>{{details.capacity_l}} l</b></p>
+        <p>Fuel level after last refill: <b>{{details.level_l}} l</b></p>
+        <p>Battery capacity: <b>{{details.battery_capacity_kwh}} kWh</b></p>
+        <p>Charge level after last recharge: <b>{{details.charge_level}} %</b></p>
+    {% endif %}
+    <div>
+        <p>Recommended tire pressures:</p>
+        <p style="margin-left: 1rem;">Front: <b>{{details.recommended_tire_pressure_front}} bar</b><br>Rear: <b>{{details.recommended_tire_pressure_rear}} bar</b></p>
+    </div>
+
+</div>
+{% include "pages/refill_recharge.html" %}
+<h3>Vehicle consumption tracking</h3>
+{% include "pages/consumption_tracking.html" %}
+{% endblock %}

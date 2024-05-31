@@ -1,0 +1,210 @@
+{% extends "pages/layout.html" %}
+
+{% block content %}
+<h2>Add new vehicle</h2>
+<form action="/submit_vehicle/" method="POST">
+    <input type="text" id="make" name="make" value="{{prefilled.make}}" title="Make" />
+    <input type="text" id="model" name="model" value="{{prefilled.model}}" title="Model" />
+    <input type="text" id="additional_model_info" name="additional_model_info" value="{{prefilled.additional_model_info}}" title="Additional model info" />
+    <input type="number" id="year" name="year" value="{{prefilled.year}}" title="Year" />
+    <input type="text" id="licence" name="licence" value="{{prefilled.licence}}" title="Licence plate" />
+    <input type="number" id="odo" name="odo" value="{{prefilled.odo}}" title="Odometer reading" />
+    <fieldset>
+        <legend><b>Is the car rental or loaned?</b></legend>
+        {% if prefilled.rental_loaner == "no" %}
+            <div>
+                <input type="radio" id="rental_loaner_no" name="rental_loaner" value="no" checked />
+                <label for="rental_loaner_no">No</label>
+            </div>
+            <div>
+                <input type="radio" id="rental_loaner_yes" name="rental_loaner" value="yes" />
+                <label for="rental_loaner_yes">Yes</label>
+            </div>
+        {% else %}
+            <div>
+                <input type="radio" id="rental_loaner_no" name="rental_loaner" value="no" />
+                <label for="rental_loaner_no">No</label>
+            </div>
+            <div>
+                <input type="radio" id="rental_loaner_yes" name="rental_loaner" value="yes" checked />
+                <label for="rental_loaner_yes">Yes</label>
+            </div>
+        {% endif %}
+    </fieldset>
+    <fieldset id="vehicle_type" name="vehicle_type">
+        <legend><b>Select the type of vehicle</b></legend>
+        <div>
+            {% if prefilled.vehicle_type == "fuel" %}
+                <input type="radio" id="single_fuel" name="vehicle_type" value="fuel" checked />
+            {% else %}
+                <input type="radio" id="single_fuel" name="vehicle_type" value="fuel" />
+            {% endif %}
+            <label for="single_fuel">Single fuel</label>
+        </div>
+        <div>
+            {% if prefilled.vehicle_type == "BE" %}
+                <input type="radio" id="flex_fuel_be" name="vehicle_type" value="BE" checked />
+            {% else %}
+                <input type="radio" id="flex_fuel_be" name="vehicle_type" value="BE" />
+            {% endif %}
+            <label for="flex_fuel_be">Flex-fuel Gasoline - Ethanol</label>
+        </div>
+        <div>
+            {% if prefilled.vehicle_type == "BG" %}
+                <input type="radio" id="flex_fuel_bg" name="vehicle_type" value="BG" checked />
+            {% else %}
+                <input type="radio" id="flex_fuel_bg" name="vehicle_type" value="BG" />
+            {% endif %}
+            <label for="flex_fuel_bg">Flex-fuel Gasoline - CBG/CNG (Gas)</label>
+        </div>
+        <div>
+            {% if prefilled.vehicle_type == "MHEV" %}
+                <input type="radio" id="mid_hybrid" name="vehicle_type" value="MHEV" checked />
+            {% else %}
+                <input type="radio" id="mid_hybrid" name="vehicle_type" value="MHEV" />
+            {% endif %}
+            <label for="mid_hybrid">Mid hybrid</label>
+        </div>
+        <div>
+            {% if prefilled.vehicle_type == "PHEV" %}
+                <input type="radio" id="plugin_hybrid" name="vehicle_type" value="PHEV" checked />
+            {% else %}
+                <input type="radio" id="plugin_hybrid" name="vehicle_type" value="PHEV" />
+            {% endif %}
+            <label for="plugin_hybrid">Plugin hybrid</label>
+        </div>
+        <div>
+            {% if prefilled.vehicle_type == "Electric" %}
+                <input type="radio" id="electric" name="vehicle_type" value="Electric" checked />
+            {% else %}
+                <input type="radio" id="electric" name="vehicle_type" value="Electric" />
+            {% endif %}
+            <label for="electric">Electric</label>
+        </div>
+    </fieldset>
+    {% if prefilled.vehicle_type == "Electric" %}
+        <fieldset id="electric_details" name="electric_details" >
+            <legend><b>Electric vehicle details</b></legend>
+            <input type="number" min="0" id="battery_capacity" name="battery_capacity" required placeholder="Battery capacity - kWh" title="Battery capacity - kWh" />
+            <input type="number" min="0" max="100" id="charge_level" name="charge_level" required placeholder="Battery charge level - %" title="Battery charge level - %" />
+        </fieldset>
+    {% elif prefilled.vehicle_type == "PHEV" or prefilled.vehicle_type == "MHEV" %}
+        <fieldset id="hybrid_details" name="electric_details" >
+            <legend><b>Hybrid vehicle details</b></legend>
+            <input type="number" min="1" id="battery_capacity" name="battery_capacity" required placeholder="Battery capacity - kWh" title="Battery capacity - kWh" />
+            {% if prefilled.vehicle_type == "PHEV" %}
+                <input type="number" min="0" id="charge_level" name="charge_level" required placeholder="Battery charge level - %" title="Battery charge level - %" />
+            {% endif %}
+        </fieldset>
+        <fieldset id="hybrid_fuel" name="hybrid_fuel" >
+            <legend><b>Hybrid vehicle fuel type</b></legend>
+            <div>
+                <input type="radio" id="hybrid_diesel" name="hybrid_fuel" value="D" />
+                <label for="hybrid_diesel" >Diesel</label>
+            </div>
+            <div>
+                <input type="radio" id="hybrid_gasoline" name="hybrid_fuel" value="B" checked />
+                <label for="hybrid_gasoline" >Gasoline</label>
+            </div>
+            <input type="number" min="0" id="fuel_capacity" name="fuel_capacity" required placeholder="Fuel capacity - l" title="Fuel capacity - l" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+        </fieldset>
+    {% elif prefilled.vehicle_type == "BE" or prefilled.vehicle_type == "BG" %}
+        <fieldset>
+            <legend><b>Flex-fuel vehicle details</b></legend>
+            <input type="number" min="0" id="fuel_capacity" name="fuel_capacity" required placeholder="Fuel capacity - l" title="Fuel capacity - l" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            {% if prefilled.vehicle_type == "BG" %}
+                <input type="number" min="0" id="fuel_capacity_g" name="fuel_capacity_g" required placeholder="Fuel capacity - CBG/CNG - kg"/>
+                <select style="margin: 0.5rem 0;" id="fuel_level_g" name="fuel_level_g" required title="Gas level" >
+                    <option value="" selected disabled>Choose gas level</option>
+                    <option value="0" >Empty</option>
+                    <option value="0.125" >1 / 8</option>
+                    <option value="0.25" >2 / 8</option>
+                    <option value="0.375" >3 / 8</option>
+                    <option value="0.5" >Half</option>
+                    <option value="0.625" >5 / 8</option>
+                    <option value="0.75" >6 / 8</option>
+                    <option value="0.875" >7 / 8</option>
+                    <option value="1" >Full</option>
+                </select>
+            {% endif %}
+        </fieldset>
+    {% elif prefilled.vehicle_type == "fuel" %}
+        <fieldset>
+            <legend><b>Single fuel vehicle details</b></legend>
+            <div>
+                <input type="radio" id="fuel_type_diesel" name="fuel_type" value="D" />
+                <label for="fuel_type_diesel">Diesel</label>
+            </div>
+            <div>
+                <input type="radio" id="fuel_type_gasoline" name="fuel_type" value="B" checked />
+                <label for="fuel_type_gasoline">Gasoline</label>
+            </div>
+            <div>
+                <input type="radio" id="fuel_type_e85" name="fuel_type" value="E" />
+                <label for="fuel_type_e85">Ethanol (E85)</label>
+            </div>
+            <div>
+                <input type="radio" id="fuel_type_g" name="fuel_type" value="G" />
+                <label for="fuel_type_g">CBG / CNG (Gas)</label>
+            </div>
+            <input type="number" min="0" id="fuel_capacity" name="fuel_capacity" required placeholder="Fuel capacity" title="Fuel capacity" />
+            <select style="margin: 0.5rem 0;" id="fuel_capacity_units" name="fuel_capacity_units" required title="Fuel capacity units" >
+                <option value="" selected disabled>Capacity units</option>
+                <option value="l" >liters (l) for liquids</option>
+                <option value="kg">kilograms (kg) for gas</option>
+            </select>
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            
+        </fieldset>
+    {% endif %}
+    <fieldset>
+        <legend><b>Winter tires currently in use</b></legend>
+        <div>
+            <input type="radio" id="winter_tires" name="winter_tires" value="1" />
+            <label for="winter_tires">Yes</label>
+        </div>
+        <div>
+            <input type="radio" id="summer_tires" name="winter_tires" value="0" checked />
+            <label for="summer_tires">No</label>
+        </div>
+    </fieldset>
+    <input type="text" id="vehicle_nickname" name="vehicle_nickname" placeholder="Give a name to this vehicle?" title="Give a name to this vehicle?" />
+    <input type="hidden" id="phase" name="phase" value="2" />
+    <input type="submit" value="Submit vehicle"/>
+</form>
+{% endblock %}

@@ -1,0 +1,7 @@
+- csrf-token missing
+- broken access control
+- insecure design
+- identification and authentication failures
+- software and data integrity failures
+- security logging and monitoring failures
+- server-side request forgery?

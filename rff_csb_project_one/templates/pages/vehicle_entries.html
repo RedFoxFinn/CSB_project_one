@@ -1,0 +1,19 @@
+{% extends "pages/vehicle.html" %}
+
+{% block entries %}
+<ul>
+    {% for entry in vehicle_entries %}
+    <li>
+        <p>Date: {{entry.date}}</p>
+        <p>Distance covered: {{entry.distance}}</p>
+        {% if entry.level_charged_to %}
+            <p>Level charged to: {{entry.level_charged_to}}</p>
+        {% else %}
+            <p>Refill type: {{entry.type_of_refill}}</p>
+            <p>Amount: {{entry.amount}} {{entry.units}}</p>
+        {% endif %}
+        <p>Price: {{entry.price}} {{entry.price_units}}</p>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

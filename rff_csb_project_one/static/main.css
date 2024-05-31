@@ -1,0 +1,40 @@
+
+.rootcontainer {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+
+.midcontainer {
+    margin: 0.25rem 0.75rem;
+}
+
+.contentcontainer {
+    display: block;
+}
+
+nav {
+    display: inline-flex;
+    flex-direction: row;
+}
+
+a {
+    margin: 0.25rem 0.75rem;
+    color: purple;
+}
+
+form,fieldset {
+    display: flex;
+    flex-direction: column;
+    max-width: 24rem;
+    justify-content: space-between;
+}
+
+input {
+    margin: 0.5rem 0;
+}
+
+label {
+    margin-left: 0.25rem;
+}

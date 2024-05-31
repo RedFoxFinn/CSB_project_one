@@ -1,0 +1,25 @@
+{% load static %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Vehicle manager</title>
+    <link rel="stylesheet" href="{% static 'main.css' %}">
+</head>
+<body>
+    <div class="rootcontainer">
+        <nav>
+            <a href="/" style="color: purple; font-weight: bold;">Home</a>
+            <a href="/root/" style="color: orangered; font-weight: bold; outline: 2px solid orangered; padding: 0 0.75rem;">root?</a>
+            <a href="/add_vehicle/1/" style="color: purple; font-weight: bold;">Add new vehicle</a>
+        </nav>
+        <div class="midcontainer">
+            <h1>Welcome to the Vehicle manager</h1>
+            <p>On this site you can manage your vehicles and track the expenses related to the fuel and electricity consumption</p>
+            <div class="contentcontainer">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends "pages/layout.html" %}
+
+{% block content %}
+<h2 style="color: firebrick;">Testing / debugging page [MUST REMOVE BEFORE PROD]</h2>
+<p>Oh, um.. Hi? What are you doing here?</p>
+
+<legend style="font-size:x-large;"><b>Are you sure? Ok...</b></legend>
+<form class="debug_form" action="/debug_reset_vehicles/" style="margin: 0.75rem 0;">
+    <input type="submit" value="Reset vehicles" style="font-weight: bold; color: crimson; height: 2.5rem;" />
+</form>
+
+<form class="debug_form" action="/debug_reset_refills/" style="margin: 0.75rem 0;">
+    <input type="submit" value="Reset refills" style="font-weight: bold; color: crimson; height: 2.5rem;" />
+</form>
+
+<form class="debug_form" action="/debug_reset_recharges/" style="margin: 0.75rem 0;">
+    <input type="submit" value="Reset recharges" style="font-weight: bold; color: crimson; height: 2.5rem;" />
+</form>
+
+<form class="debug_form" action="/raw_sql/" style="margin: 0.75rem 0; padding: 0.5rem 0; border-top: 3px dashed darkolivegreen; border-bottom: 3px dashed darkolivegreen;">
+    <input type="text" name="sql" value="SELECT * FROM vehicles;" style="padding: 0.5rem; margin: 0.5rem 0;" />
+    <input type="submit" value="Raw SQL" style="font-weight: bold; color: crimson; height: 2.5rem;" />
+</form>
+{% endblock %}

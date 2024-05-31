@@ -1,0 +1,21 @@
+{% block simplevehicles %}
+{% for vehicle in vehicles %}
+    <details style="margin-bottom: 1.5rem; outline: 3px dashed purple; padding-top: 0.25rem; padding-bottom: 0.75rem; padding-left: 1rem; padding-right: 1rem;">
+        {% if vehicle.nickname %}
+            <summary style="color: darkgreen; padding: 0.5rem; font-size: large;">{{vehicle.nickname}}</summary>
+        {% else %}
+            <summary style="color: darkgreen; padding: 0.5rem; font-size: large;">{{vehicle.model}} - {{vehicle.licence_plate}}</summary>
+        {% endif %}
+        {% if vehicle.rental_or_loan %}
+            <p style="color: crimson;">Rental / loan</p>
+        {% endif %}
+        <p>Make: {{vehicle.make}}</p>
+        <p>Model: {{vehicle.model}}</p>
+        <p>{{vehicle.vehicle_type}}</p>
+        <p>Year: {{vehicle.year}}</p>
+        <p>Licence plate: {{vehicle.licence_plate}}</p>
+        <p>Odometer reading: {{vehicle.odometer}}</p>
+        <a href="/manage_vehicle/{{vehicle.id}}/" style="max-width: 10rem; display: block; color: darkolivegreen; margin-left: 0; padding: 1rem; outline: 1px solid darkolivegreen;">Manage this vehicle</a>
+    </details>
+{% endfor %}
+{% endblock %}

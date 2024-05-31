@@ -1,0 +1,12 @@
+{% extends "pages/layout.html" %}
+
+{% block content %}
+<h2>Vehicles</h2>
+<div>
+{% if vehicles %}
+    {% include "pages/simple_vehicle.html" %}
+{% else %}
+    <p>No vehicles found.</p>
+{% endif %}
+</div>
+{% endblock %}

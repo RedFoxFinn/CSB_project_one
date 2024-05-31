@@ -1,0 +1,280 @@
+{% block refill_recharge_form %}
+{% if details.vehicle_type_shorthand == "EV" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Recharging</summary>
+        <form action="/submit_recharge/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <input type="text" name="recharge_location" placeholder="Recharge location" required title="Location of the recharge" />
+            <input type="number" name="recharged_kwh" step="0.1" min="0.1" placeholder="Recharge amount - kWh" required title="Recharge amount in kilowatt-hours" />
+            <input type="number" name="charge_to" step="1" min="1" placeholder="Charge level at end - %" required title="Battery charge level at end in full percents" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last recharge in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the recharge in euros" />
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log charging" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "CGV" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Select the fuel</legend>
+                <div title="CNG - Compressed Natural Gas">
+                    <input type="radio" id="gas_selection_cng" name="refill_type" value="CNG" />
+                    <label for="gas_selection_cng">CNG - Natural Gas</label>
+                </div>
+                <div title="CBG - Compressed Bio Gas">
+                    <input type="radio" id="gas_selection_cbg" name="refill_type" value="CBG" />
+                    <label for="gas_selection_cbg">CBG - Bio Gas</label>
+                </div>
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount - kg" required title="Refill amount in kilograms" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last recharge in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "SFV" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Fuel type</legend>
+                {% if details.fuel_type_shorthand == "D" %}
+                    <div title="D - Diesel">
+                        <input type="radio" id="fuel_selection_diesel" name="refill_type" value="D" checked />
+                        <label for="fuel_selection_diesel">D - Diesel</label>
+                    </div>
+                {% elif details.fuel_type_shorthand == "B" %}
+                    <div title="B - Gasoline">
+                        <input type="radio" id="fuel_selection_gasoline" name="refill_type" value="B" checked />
+                        <label for="fuel_selection_gasoline">B - Gasoline</label>
+                    </div>
+                {% elif details.fuel_type_shorthand == "E" %}
+                    <div title="E - Ethanol">
+                        <input type="radio" id="fuel_selection_ethanol" name="refill_type" value="E" checked />
+                        <label for="fuel_selection_ethanol">E - Ethanol</label>
+                    </div>
+                {% endif %}
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount - l" required title="Refill amount in liters" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last refueling in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "FFVE" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Select the fuel</legend>
+                <div title="B - Gasoline">
+                    <input type="radio" id="fuel_selection_gasoline" name="refill_type" value="B" />
+                    <label for="fuel_selection_gasoline">B - Gasoline</label>
+                </div>
+                <div title="E - Ethanol">
+                    <input type="radio" id="fuel_selection_ethanol" name="refill_type" value="E" checked />
+                    <label for="fuel_selection_ethanol">E - Ethanol</label>
+                </div>
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount - l" required title="Refill amount in liters" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last refueling in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "FFVG" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Select the fuel</legend>
+                <div title="B - Gasoline">
+                    <input type="radio" id="fuel_selection_gasoline" name="refill_type" value="B" />
+                    <label for="fuel_selection_gasoline">B - Gasoline</label>
+                </div>
+                <div title="CNG - Compressed Natural Gas">
+                    <input type="radio" id="gas_selection_cng" name="refill_type" value="CNG" />
+                    <label for="gas_selection_cng">CNG - Natural Gas</label>
+                </div>
+                <div title="CBG - Compressed Bio Gas">
+                    <input type="radio" id="gas_selection_cbg" name="refill_type" value="CBG" />
+                    <label for="gas_selection_cbg">CBG - Bio Gas</label>
+                </div>
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount" required title="Refill amount" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last refueling in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "MHEV" %}
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Fuel type</legend>
+                {% if details.fuel_type_shorthand == "D" %}
+                    <div title="D - Diesel">
+                        <input type="radio" id="fuel_selection_diesel" name="refill_type" value="D" checked />
+                        <label for="fuel_selection_diesel">D - Diesel</label>
+                    </div>
+                {% elif details.fuel_type_shorthand == "B" %}
+                    <div title="B - Gasoline">
+                        <input type="radio" id="fuel_selection_gasoline" name="refill_type" value="B" checked />
+                        <label for="fuel_selection_gasoline">B - Gasoline</label>
+                    </div>
+                {% endif %}
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount - l" required title="Refill amount in liters" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last refueling in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+{% elif details.vehicle_type_shorthand == "PHEV" %}
+    <details style="margin-bottom: 0.75rem;">
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Refilling</summary>
+        <form action="/submit_refill/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <fieldset>
+                <legend>Fuel type</legend>
+                {% if details.fuel_type_shorthand == "D" %}
+                    <div title="D - Diesel">
+                        <input type="radio" id="fuel_selection_diesel" name="refill_type" value="D" checked />
+                        <label for="fuel_selection_diesel">D - Diesel</label>
+                    </div>
+                {% elif details.fuel_type_shorthand == "B" %}
+                    <div title="B - Gasoline">
+                        <input type="radio" id="fuel_selection_gasoline" name="refill_type" value="B" checked />
+                        <label for="fuel_selection_gasoline">B - Gasoline</label>
+                    </div>
+                {% endif %}
+            </fieldset>
+            <input type="text" name="refill_location" placeholder="Refill location" required title="Location of the refill" />
+            <input type="number" name="fill_amount" step="0.01" min="0.01" placeholder="Refill amount - l" required title="Refill amount in liters" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the refill in euros" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last refueling in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <select style="margin: 0.5rem 0;" id="fuel_level" name="fuel_level" required title="Fuel level" >
+                <option value="" selected disabled>Choose fuel level</option>
+                <option value="0" >Empty</option>
+                <option value="0.125" >1 / 8</option>
+                <option value="0.25" >2 / 8</option>
+                <option value="0.375" >3 / 8</option>
+                <option value="0.5" >Half</option>
+                <option value="0.625" >5 / 8</option>
+                <option value="0.75" >6 / 8</option>
+                <option value="0.875" >7 / 8</option>
+                <option value="1" >Full</option>
+            </select>
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log refueling" />
+        </form>
+    </details>
+    <details>
+        <summary style="font-weight: bold; font-size: larger;" >Log Vehicle Recharging</summary>
+        <form action="/submit_recharge/" style="margin: 0.75rem 0;" method="POST">
+            <input type="hidden" name="vehicle_id" value="{{details.id}}"/>
+            <input type="hidden" name="next" value="/manage_vehicle/{{details.id}}/"/>
+            <input type="text" name="recharge_location" placeholder="Recharge location" required title="Location of the recharge" />
+            <input type="number" name="recharged_kwh" step="0.1" min="0.1" placeholder="Recharge amount - kWh" required title="Recharge amount in kilowatt-hours" />
+            <input type="number" name="charge_to" step="1" min="1" placeholder="Charge level at end - %" required title="Battery charge level at end in full percents" />
+            <input type="number" name="distance_covered" step="0.1" min="0.1" placeholder="Distance covered - km" required title="Distance covered since last recharge in kilometers" />
+            <input type="number" name="odometer_reading" step="1" min="1" placeholder="Odometer reading - km" required title="Current odometer reading in kilometers" />
+            <input type="number" name="price" step="0.01" min="0.01" placeholder="Price - €" required title="Price of the recharge in euros" />
+            <input type="text" name="notes" placeholder="Additional notes (optional)" title="Additional notes" />
+            <input type="submit" value="Log charging" />
+        </form>
+    </details>
+{% endif %}
+{% endblock %}

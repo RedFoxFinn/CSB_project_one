@@ -1,0 +1,176 @@
+{% block refill_recharge_tracking %}
+{% if details.vehicle_type_shorthand == "EV" %}
+    {% if details.recharges %}
+        {% for recharge in details.recharges %}
+        <details style="outline: 2px double dashed purple;">
+            <summary>{% if recharge.winter_tires %}[W] {% endif %}Recharge {{recharge.date}}</summary>
+            <p>Date: <b>{{recharge.date}}</b></p>
+            <p>Location: <b>{{recharge.recharge_location}}</b></p>
+            <p>Amount: <b>{{recharge.recharged_kwh}} kWh</b></p>
+            <p>Battery level at the end: <b>{{recharge.level_charged_to}} %</b></p>
+            <p>Cost: <b>{{recharge.price}} €</b></p>
+            <p>Distance covered since last recharge: <b>{{recharge.distance}} km</b></p>
+            <p>Average consumption: <b>{{recharge.average_consumption}} kWh / 100 km</b></p>
+            <p>Odometer reading: <b>{{recharge.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{recharge.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Battery recharges has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "CGV" %}
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} kg</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} kg / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of compressed gas has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "SFV" %}
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} l</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} l / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of gasoline has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "FFVE" %}
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} l</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} l / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of gasoline has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "FFVG" %}
+    <h4>Gas</h4>
+    {% if details.gas_refuelings %}
+        {% for refueling in details.gas_refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} kg</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} kg / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of compressed gas has not been registered</p>
+    {% endif %}
+    <h4>Gasoline</h4>
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} l</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} l / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of gasoline has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "MHEV" %}
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details>
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} l</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} l / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of gasoline has not been registered</p>
+    {% endif %}
+{% elif details.vehicle_type_shorthand == "PHEV" %}
+    <h4>Fuel</h4>
+    {% if details.refuelings %}
+        {% for refueling in details.refuelings %}
+        <details style="outline: 2px solid purple; padding: 0.75rem; margin: 0.75rem 0;">
+            <summary>{% if refueling.winter_tires %}[W] {% endif %}Refueling {{refueling.date}}</summary>
+            <p>Date: <b>{{refueling.date}}</b></p>
+            <p>Location: <b>{{refueling.refill_location}}</b></p>
+            <p>Amount: <b>{{refueling.amount}} l</b></p>
+            <p>Fuel level at the end: <b>{{refueling.fuel_level}}</b></p>
+            <p>Cost: <b>{{refueling.price}} €</b></p>
+            <p>Distance covered since last refueling: <b>{{refueling.distance}} km</b></p>
+            <p>Average consumption: <b>{{refueling.average_consumption}} l / 100 km</b></p>
+            <p>Odometer reading: <b>{{refueling.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{refueling.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Refuelings of gasoline has not been registered</p>
+    {% endif %}
+    <h4>Electric</h4>
+    {% if details.recharges %}
+        {% for recharge in details.recharges %}
+        <details>
+            <summary>{% if recharge.winter_tires %}[W] {% endif %}Recharge {{recharge.date}}</summary>
+            <p>Date: <b>{{recharge.date}}</b></p>
+            <p>Location: <b>{{recharge.recharge_location}}</b></p>
+            <p>Amount: <b>{{recharge.recharged_kwh}} kWh</b></p>
+            <p>Battery level at the end: <b>{{recharge.level_charged_to}} %</b></p>
+            <p>Cost: <b>{{recharge.price}} €</b></p>
+            <p>Distance covered since last recharge: <b>{{recharge.distance}} km</b></p>
+            <p>Average consumption: <b>{{recharge.average_consumption}} kWh / 100 km</b></p>
+            <p>Odometer reading: <b>{{recharge.odometer_reading}} km</b></p>
+            <p>Additional notes: <b>{{recharge.notes}}</b></p>
+        </details>
+        {% endfor %}
+    {% else %}
+        <p>Battery recharges has not been registered</p>
+    {% endif %}
+{% endif %}
+{% endblock %}
