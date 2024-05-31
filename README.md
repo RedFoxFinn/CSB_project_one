@@ -20,3 +20,16 @@ I've also added the OWASPs Top 10 web application security risk list as [markdow
 
 
 And the [project report essay](ESSAY.md) is additionally included in this repo.
+
+### Codebase, documentation & reporting
+
+![python](https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue)
+![django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=green)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![SQLite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white)
+![markdown](https://img.shields.io/badge/Markdown-000000?style=for-the-badge&logo=markdown&logoColor=white)
+
+#### Credits
+
+Those awesome badges I've used in here, were listed in [this repo](https://github.com/alexandresanlim/Badges4-README.md-Profile). Take a look, if you're interested to use similar ones.
